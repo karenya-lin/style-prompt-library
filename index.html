@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>風格提示詞庫 Style Prompt Library</title>
+<meta name="description" content="UI/UX 設計師的視覺風格與 AI 生圖提示詞庫：11 種風格，含色票、字體搭配、關鍵元素、可直接複製的英文 prompt 與 negative prompt。">
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@800&family=Bangers&family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Caveat+Brush&family=Chakra+Petch:ital,wght@1,700&family=DM+Serif+Display&family=Fraunces:ital,wght@1,600&family=Ubuntu:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#FAF8F5; --surface:#FFFFFF; --surface-2:#F4F1F8; --text:#1B1726; --muted:#565063;
+  --line:#E4DFEA; --accent:#5B3FA0; --accent-ink:#FFFFFF; --accent-soft:#ECE6F8;
+  --note-bg:#FFF4E0; --note-text:#5C3B00; --note-bar:#D98A00;
+  --shadow:0 1px 2px rgba(27,23,38,.06),0 6px 20px rgba(27,23,38,.07);
+  --focus:#1F6FEB; --ok:#1C7C4A;
+  --radius:16px;
+  font-family:Ubuntu,"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14111B; --surface:#1E1A28; --surface-2:#2A2438; --text:#EDEAF3; --muted:#B8B1C6;
+    --line:#383148; --accent:#BBA6F2; --accent-ink:#14111B; --accent-soft:#2F2745;
+    --note-bg:#33280F; --note-text:#FFDCA0; --note-bar:#E0A030;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 20px rgba(0,0,0,.35);
+    --focus:#7FB2FF; --ok:#6FD39C;
+  }
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);line-height:1.6;font-size:16px;overflow-x:hidden}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:8px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 16px}
+.skip{position:absolute;left:-9999px;top:8px;background:var(--surface);color:var(--text);padding:12px 16px;border-radius:8px;z-index:10}
+.skip:focus{left:16px}
+
+header.site{padding:48px 0 24px}
+header.site h1{margin:0 0 8px;font-size:clamp(1.6rem,4.5vw,2.6rem);line-height:1.2;letter-spacing:-.01em}
+header.site h1 .en{display:block;font-size:.55em;font-weight:500;color:var(--muted);letter-spacing:.02em;margin-top:4px}
+header.site p{margin:0;color:var(--muted);max-width:60ch}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:flex-end;padding:16px 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;border:0;min-width:0}
+.chips legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.chip{min-height:48px;padding:0 18px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit;font-weight:500;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.chip:hover{border-color:var(--accent)}
+.search{flex:1 1 240px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.search label{font-size:.875rem;color:var(--muted)}
+.search input{min-height:48px;width:100%;padding:0 16px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit}
+.count{color:var(--muted);font-size:.875rem;margin:4px 0 16px}
+
+.list{display:grid;gap:28px;padding-bottom:16px}
+.card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;scroll-margin-top:16px}
+.card[hidden]{display:none}
+.visual{background:var(--surface-2)}
+.visual img,.visual svg{display:block;width:100%;height:auto}
+.card-body{padding:20px 20px 24px;display:grid;gap:24px}
+@media (min-width:960px){.card-body{grid-template-columns:minmax(0,5fr) minmax(0,6fr);padding:24px 28px 28px}}
+.card h2{margin:0;font-size:1.35rem;line-height:1.3}
+.card h2 .zh{display:block;font-size:.95rem;font-weight:500;color:var(--muted);margin-top:2px}
+.meta{display:grid;gap:18px;align-content:start;min-width:0}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.badge{font-size:.8125rem;padding:2px 10px;border-radius:999px;background:var(--accent-soft);color:var(--text)}
+.badge.cat{background:var(--accent);color:var(--accent-ink)}
+h3{margin:0 0 8px;font-size:.8125rem;font-weight:700;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.use{margin:0}
+.palette{display:flex;flex-wrap:wrap;gap:8px}
+.hex{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 12px 0 8px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:500 .875rem/1 ui-monospace,SFMono-Regular,Consolas,monospace;cursor:pointer}
+.hex .sw{width:28px;height:28px;border-radius:8px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.hex:hover{border-color:var(--accent)}
+.hex.done{border-color:var(--ok);color:var(--ok)}
+.fonts{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.fonts li{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.fonts .aa{font-size:1.5rem;line-height:1.2;min-width:2.2ch}
+.fonts a{display:inline-flex;align-items:center;min-height:48px;font-weight:500}
+.fonts .fnote{color:var(--muted);font-size:.875rem;flex-basis:100%;margin-top:-10px}
+.motifs{margin:0;padding-left:1.2em}
+.motifs li+li{margin-top:2px}
+.note{margin:0;padding:12px 14px;border-radius:12px;background:var(--note-bg);color:var(--note-text);border-left:4px solid var(--note-bar)}
+.note strong{display:block;font-size:.8125rem;letter-spacing:.06em}
+.prompts{display:grid;gap:20px;align-content:start;min-width:0}
+.prompt-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.prompt-head h3{margin:0}
+pre{margin:0;padding:14px 16px;border-radius:12px;background:var(--surface-2);color:var(--text);font:.875rem/1.6 ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
+pre.neg{opacity:.92}
+.copy{min-height:48px;padding:0 18px;border-radius:999px;border:0;background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:700;cursor:pointer}
+.copy.ghost{background:transparent;color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent)}
+.copy.done{background:var(--ok);color:#fff;box-shadow:none}
+.empty{padding:32px;text-align:center;color:var(--muted);background:var(--surface);border-radius:var(--radius)}
+
+.donts{margin:40px 0 0;padding:24px 20px;background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow)}
+.donts h2{margin:0 0 12px;font-size:1.35rem}
+.donts ol{margin:0;padding-left:1.4em;display:grid;gap:8px}
+footer.site{padding:32px 0 48px;color:var(--muted);font-size:.875rem}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#list">跳到風格列表</a>
+<header class="site">
+  <div class="wrap">
+    <h1>風格提示詞庫<span class="en">Style Prompt Library</span></h1>
+    <p>整理過的視覺風格：色票、字體搭配、關鍵元素，以及可直接複製的 AI 生圖 prompt（英文）與 negative prompt。</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="toolbar">
+    <fieldset class="chips" id="filters">
+      <legend>依類別篩選</legend>
+      <button type="button" class="chip" data-filter="all" aria-pressed="true">全部</button>
+      <button type="button" class="chip" data-filter="ai" aria-pressed="false">AI 生圖插畫</button>
+      <button type="button" class="chip" data-filter="layout" aria-pressed="false">版面風格</button>
+      <button type="button" class="chip" data-filter="festive" aria-pressed="false">節慶</button>
+    </fieldset>
+    <div class="search">
+      <label for="q">搜尋名稱或標籤</label>
+      <input id="q" type="search" placeholder="例：clay、印刷、Christmas" autocomplete="off">
+    </div>
+  </div>
+  <p class="count" id="count" aria-live="polite"></p>
+
+  <div class="list" id="list"></div>
+  <noscript><p class="empty">此頁需要啟用 JavaScript 才能顯示風格卡片。</p></noscript>
+
+  <section class="donts" aria-labelledby="donts-h">
+    <h2 id="donts-h">Don'ts 學到的教訓</h2>
+    <ol>
+      <li>不要用固定 top 值排文案：一律垂直置中，上下留白相等且 ≥ 28px</li>
+      <li>不要做沒有主視覺的 banner（只有底紋＋字會被問「圖呢？」）</li>
+      <li>3D 科技不要用通用格線地面</li>
+      <li>不要做成網頁區塊的樣子（淺底＋圓角照片框）</li>
+      <li>生圖不要讓 AI 畫 logo：生空白卡，再合成 logo</li>
+      <li>AI 人物常見破綻：每個人都張嘴大笑、Pixar 臉、紙花過多 → 指定真實媒材＋限色＋表情多樣</li>
+      <li>花紋拼接要同底同色才會融合</li>
+      <li>文案要給左側 40–45% 的空白，所有人頭放在上方 70%，裁成 4.4:1 時才不會切到臉</li>
+    </ol>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">最後更新：<time datetime="2026-10-22">2026-10-22</time>　·　範例圖皆為 AI 生成，卡面留白、不含任何商標。</div>
+</footer>
+<div class="sr" id="live" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+var TAU=Math.PI*2;
+function rays(cx,cy,n,R,fill,op){
+  var d="";
+  for(var i=0;i<n;i++){
+    var a1=i*TAU/n,a2=a1+TAU/(2*n);
+    d+="M"+cx+","+cy+"L"+(cx+R*Math.cos(a1)).toFixed(1)+","+(cy+R*Math.sin(a1)).toFixed(1)+"L"+(cx+R*Math.cos(a2)).toFixed(1)+","+(cy+R*Math.sin(a2)).toFixed(1)+"Z";
+  }
+  return '<path d="'+d+'" fill="'+fill+'"'+(op?' opacity="'+op+'"':'')+'/>';
+}
+function star(cx,cy,n,r1,r2){
+  var p=[];
+  for(var i=0;i<n*2;i++){var r=i%2?r2:r1,a=i*Math.PI/n-Math.PI/2;p.push((cx+r*Math.cos(a)).toFixed(1)+","+(cy+r*Math.sin(a)).toFixed(1));}
+  return p.join(" ");
+}
+function seeded(s){return function(){s=(s*9301+49297)%233280;return s/233280;};}
+function svg(label,inner,defs){
+  return '<svg viewBox="0 0 880 200" role="img" aria-label="'+label+'" xmlns="http://www.w3.org/2000/svg">'+(defs?'<defs>'+defs+'</defs>':'')+inner+'</svg>';
+}
+
+/* ---------- swatches (4.4:1) ---------- */
+function swPop(){
+  var D="#2A1D3F";
+  var defs='<pattern id="pop-dots" width="10" height="10" patternUnits="userSpaceOnUse"><circle cx="5" cy="5" r="2.3" fill="#E8501A"/></pattern>'+
+    '<clipPath id="pop-clip"><rect x="560" y="26" width="270" height="146"/></clipPath>';
+  var s='<rect width="880" height="200" fill="#F5A117"/>'+rays(250,110,32,700,"#FFE14D",.45)+
+    '<rect width="520" height="200" fill="url(#pop-dots)" opacity=".35"/>'+
+    '<text x="36" y="96" font-family="Archivo Black" font-size="40" fill="'+D+'" transform="translate(4 4)">GIFT CARDS</text>'+
+    '<text x="36" y="96" font-family="Archivo Black" font-size="40" fill="#FFFFFF" stroke="'+D+'" stroke-width="7" stroke-linejoin="round" paint-order="stroke">GIFT CARDS</text>'+
+    '<text x="36" y="142" font-family="Archivo Black" font-size="36" fill="'+D+'" transform="translate(4 4)">FOR EVERYONE</text>'+
+    '<text x="36" y="142" font-family="Archivo Black" font-size="36" fill="#FFFFFF" stroke="'+D+'" stroke-width="7" stroke-linejoin="round" paint-order="stroke">FOR EVERYONE</text>'+
+    /* speech bubble */
+    '<path d="M402,22 h120 a18,18 0 0 1 18,18 v18 a18,18 0 0 1 -18,18 h-62 l-14,18 l-2,-18 h-42 a18,18 0 0 1 -18,-18 v-18 a18,18 0 0 1 18,-18z" fill="#FFFFFF" stroke="'+D+'" stroke-width="4"/>'+
+    '<text x="462" y="57" text-anchor="middle" font-family="Bangers" font-size="21" letter-spacing="1" fill="'+D+'">UNE SEULE CARTE!</text>'+
+    /* emphasis wedges pointing into the panel */
+    '<path d="M516,70 L556,82 L516,92Z M506,104 L556,104 L506,116Z M516,128 L556,124 L520,148Z" fill="'+D+'"/>'+
+    /* comic panel */
+    '<rect x="569" y="35" width="270" height="146" fill="'+D+'"/>'+
+    '<g clip-path="url(#pop-clip)"><rect x="560" y="26" width="270" height="146" fill="#553E7B"/>'+rays(695,99,22,320,"#FFE14D",.9)+'</g>'+
+    '<rect x="560" y="26" width="270" height="146" fill="none" stroke="'+D+'" stroke-width="6"/>'+
+    '<g transform="rotate(-8 695 100)"><rect x="625" y="58" width="140" height="86" rx="10" fill="#553E7B" stroke="'+D+'" stroke-width="5"/>'+
+    '<rect x="640" y="72" width="30" height="22" rx="4" fill="#F5A117" stroke="'+D+'" stroke-width="2"/><rect x="640" y="118" width="70" height="8" rx="4" fill="#FFFFFF" opacity=".8"/></g>'+
+    /* WOW burst */
+    '<polygon points="'+star(828,52,12,46,28)+'" fill="#E8501A" stroke="'+D+'" stroke-width="4" stroke-linejoin="round"/>'+
+    '<text x="828" y="62" text-anchor="middle" font-family="Bangers" font-size="28" fill="#FFFFFF" stroke="'+D+'" stroke-width="3" paint-order="stroke">WOW!</text>'+
+    /* lightning bolt */
+    '<path d="M520,150 l22,-4 l-10,18 l24,-4 l-36,34 l12,-24 l-20,4z" fill="#FFE14D" stroke="'+D+'" stroke-width="3" stroke-linejoin="round"/>'+
+    /* sparkle stars + heart */
+    '<path d="M462,160 l4,10 l10,4 l-10,4 l-4,10 l-4,-10 l-10,-4 l10,-4z" fill="#FFFFFF" stroke="'+D+'" stroke-width="2"/>'+
+    '<path d="M600,12 l3,7 l7,3 l-7,3 l-3,7 l-3,-7 l-7,-3 l7,-3z" fill="#FFFFFF" stroke="'+D+'" stroke-width="2"/>'+
+    '<path d="M424,176 c-6,-8 -18,-2 -12,8 l12,12 l12,-12 c6,-10 -6,-16 -12,-8z" fill="#E8501A" stroke="'+D+'" stroke-width="2.5"/>';
+  return svg("Pop Art 普普漫畫風格示意：橘色放射底、班戴點、白字深描邊硬陰影標題、對話框、WOW 爆炸框與粗框漫畫格",s,defs);
+}
+
+function swSwiss(){
+  var D="#2A1D3F",g="";
+  for(var x=24;x<=856;x+=104){g+='<line x1="'+x+'" y1="0" x2="'+x+'" y2="200" stroke="'+D+'" stroke-opacity=".08"/>';}
+  var dots="";
+  for(var r=0;r<4;r++)for(var c=0;c<6;c++){dots+='<circle cx="'+(556+c*10)+'" cy="'+(18+r*10)+'" r="2" fill="'+D+'"/>';}
+  var defs='<linearGradient id="sw-ph" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E6E6E6"/><stop offset="1" stop-color="#4A4A4A"/></linearGradient>'+
+    '<pattern id="sw-st" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="4" height="8" fill="#B8650A"/></pattern>'+
+    '<filter id="sw-grain"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" result="n"/><feColorMatrix in="n" type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".25"/></feComponentTransfer><feComposite in2="SourceGraphic" operator="in"/></filter>';
+  var s='<rect width="880" height="200" fill="#F6F5F7"/>'+g+
+    '<rect x="24" y="16" width="832" height="4" fill="'+D+'"/><rect x="24" y="182" width="832" height="1.5" fill="'+D+'"/>'+
+    '<text transform="translate(42 172) rotate(-90)" font-family="Archivo" font-weight="800" font-size="10" letter-spacing="2.5" fill="#553E7B">N°01 / GIFT CARD</text>'+
+    '<circle cx="138" cy="104" r="60" fill="#F5A117"/>'+
+    '<text x="140" y="170" text-anchor="middle" font-family="Archivo" font-weight="800" font-size="190" letter-spacing="-6" fill="'+D+'">1</text>'+
+    '<text x="236" y="80" font-family="Archivo" font-weight="800" font-size="44" letter-spacing="-2.2" fill="'+D+'">Gift cards</text>'+
+    '<text x="236" y="124" font-family="Archivo" font-weight="800" font-size="44" letter-spacing="-2.2" fill="'+D+'">for everyone.</text>'+
+    '<rect x="236" y="138" width="40" height="3" fill="#F5A117"/>'+
+    '<text x="236" y="158" font-family="Archivo" font-weight="800" font-size="11" letter-spacing="1.5" fill="#553E7B">UNE SEULE CARTE — 2026</text>'+
+    /* geometric blocks framing a B&W photo */
+    '<path d="M560,182 v-80 a80,80 0 0 1 80,80z" fill="#553E7B"/>'+dots+
+    '<rect x="818" y="34" width="38" height="140" fill="url(#sw-st)"/>'+
+    '<g><rect x="610" y="34" width="208" height="140" fill="url(#sw-ph)"/>'+
+    '<circle cx="680" cy="80" r="17" fill="#2B2B2B"/><path d="M646,174 c0,-46 16,-72 34,-72 s34,26 34,72z" fill="#333"/>'+
+    '<circle cx="760" cy="88" r="15" fill="#8A8A8A"/><path d="M730,174 c0,-40 14,-62 30,-62 s30,22 30,62z" fill="#9C9C9C"/>'+
+    '<rect x="706" y="122" width="26" height="20" fill="#F0F0F0"/><rect x="717" y="122" width="4" height="20" fill="#BDBDBD"/>'+
+    '<rect x="610" y="34" width="208" height="140" fill="#777" filter="url(#sw-grain)"/></g>';
+  return svg("Swiss Style 瑞士國際主義示意：嚴格網格與線條、圓形上的超大數字 1、直排標籤、幾何色塊框住黑白照片",s,defs);
+}
+
+function swEsports(){
+  var defs='<pattern id="es-str" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="2" height="14" fill="#2A1D3F"/></pattern>'+
+    '<linearGradient id="es-card" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#553E7B"/><stop offset="1" stop-color="#2A1D3F"/></linearGradient>'+
+    '<filter id="es-glow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="0" stdDeviation="9" flood-color="#F5A117" flood-opacity=".85"/></filter>';
+  var tiles="";
+  for(var i=0;i<3;i++){
+    var sel=i===1,y=40+i*44;
+    tiles+='<rect x="'+(486-i*4)+'" y="'+y+'" width="64" height="34" transform="skewX(-12)" fill="'+(sel?"#F5A117":"#2A1D3F")+'" stroke="'+(sel?"#FFFFFF":"#553E7B")+'" stroke-width="2"'+(sel?' filter="url(#es-glow)"':'')+'/>';
+  }
+  var s='<rect width="880" height="200" fill="#0D0915"/><rect width="880" height="200" fill="url(#es-str)" opacity=".5"/>'+
+    '<polygon points="470,0 880,0 880,200 404,200" fill="#2A1D3F"/>'+
+    '<line x1="466" y1="0" x2="400" y2="200" stroke="#F5A117" stroke-width="5"/><line x1="480" y1="0" x2="414" y2="200" stroke="#553E7B" stroke-width="2"/>'+
+    '<text x="36" y="66" font-family="Chakra Petch" font-style="italic" font-weight="700" font-size="14" letter-spacing="4" fill="#F5A117">PLAYER 01 · READY</text>'+
+    '<text x="34" y="110" font-family="Chakra Petch" font-style="italic" font-weight="700" font-size="42" fill="#FFFFFF">SELECT YOUR</text>'+
+    '<text x="34" y="152" font-family="Chakra Petch" font-style="italic" font-weight="700" font-size="42" fill="#F5A117">GIFT CARD</text>'+
+    tiles+
+    /* matte dark stack behind */
+    '<rect x="652" y="44" width="170" height="106" rx="10" fill="#26222E" transform="rotate(8 737 97)"/>'+
+    '<rect x="640" y="48" width="170" height="106" rx="10" fill="#1C1922" transform="rotate(-6 725 101)"/>'+
+    /* hero card */
+    '<rect x="626" y="50" width="170" height="106" rx="10" fill="url(#es-card)" stroke="#F5A117" stroke-width="2.5" filter="url(#es-glow)"/>'+
+    '<rect x="642" y="66" width="30" height="22" rx="4" fill="#F5A117"/><rect x="642" y="132" width="84" height="8" rx="4" fill="#FFFFFF" opacity=".7"/>'+
+    /* corner brackets */
+    '<path d="M610,58 v-24 h24 M812,34 h24 v24 M836,148 v24 h-24 M634,172 h-24 v-24" fill="none" stroke="#FFFFFF" stroke-width="3"/>'+
+    '<text x="723" y="190" text-anchor="middle" font-family="Chakra Petch" font-style="italic" font-weight="700" font-size="11" letter-spacing="3" fill="#F5A117">SELECTED</text>';
+  return svg("Esports 電競選角畫面示意：深色底斜切分割、斜體大寫標題、斜角選項格其中一格發光、角框與橘色光暈主卡、後方霧面深灰卡片",s,defs);
+}
+
+function swMemphis(){
+  var rnd=seeded(7),conf="",cols=["#0E5AA7","#FFD23F","#FF6B4A","#141414"];
+  for(var i=0;i<70;i++){
+    var x=(400+rnd()*470).toFixed(0),y=(6+rnd()*188).toFixed(0),c=cols[i%4],r=(2+rnd()*3).toFixed(1),a=(rnd()*180).toFixed(0);
+    conf+=(i%3===0)?'<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="'+c+'"/>':'<rect x="'+x+'" y="'+y+'" width="'+(r*2.4).toFixed(1)+'" height="'+r+'" fill="'+c+'" transform="rotate('+a+' '+x+' '+y+')"/>';
+  }
+  var zz="M0,0 H366";
+  for(var k=0;k<10;k++){zz+=" L"+(k%2?366:388)+","+(k*20+20);}
+  zz+=" L366,200 H0Z";
+  var defs='<clipPath id="me-arch"><path d="M430,184 v-80 a50,50 0 0 1 100,0 v80z"/></clipPath>'+
+    '<clipPath id="me-circ"><circle cx="790" cy="68" r="46"/></clipPath>'+
+    '<pattern id="me-grid" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M12,0 V12 H0" fill="none" stroke="#141414" stroke-opacity=".25"/></pattern>';
+  var s='<rect width="880" height="200" fill="#BFE8D4"/>'+conf+
+    '<path d="'+zz+'" fill="#0E5AA7"/>'+
+    '<text x="34" y="86" font-family="Bricolage Grotesque" font-weight="800" font-size="46" letter-spacing="-1" fill="#FFFFFF">Une seule</text>'+
+    '<text x="34" y="134" font-family="Bricolage Grotesque" font-weight="800" font-size="46" letter-spacing="-1" fill="#FFD23F">carte.</text>'+
+    '<text x="36" y="162" font-family="Bricolage Grotesque" font-weight="800" font-size="15" fill="#FFFFFF">Gift cards for everyone</text>'+
+    /* arch photo frame, duotone portrait */
+    '<path d="M440,194 v-80 a50,50 0 0 1 100,0 v80z" fill="#FF6B4A"/>'+
+    '<g clip-path="url(#me-arch)"><rect x="430" y="40" width="100" height="150" fill="#FFD23F"/><circle cx="480" cy="108" r="22" fill="#0E5AA7"/><path d="M438,190 c4,-40 22,-54 42,-54 s38,14 42,54z" fill="#0E5AA7"/></g>'+
+    '<path d="M430,184 v-80 a50,50 0 0 1 100,0 v80z" fill="none" stroke="#141414" stroke-width="3"/>'+
+    /* circle frame */
+    '<circle cx="798" cy="76" r="46" fill="#0E5AA7"/>'+
+    '<g clip-path="url(#me-circ)"><rect x="740" y="20" width="100" height="100" fill="#FF6B4A"/><circle cx="790" cy="62" r="16" fill="#141414"/><path d="M758,118 c2,-26 16,-36 32,-36 s30,10 32,36z" fill="#141414"/></g>'+
+    '<circle cx="790" cy="68" r="46" fill="none" stroke="#141414" stroke-width="3"/>'+
+    /* shapes */
+    '<polygon points="560,40 590,40 575,14" fill="#FF6B4A" stroke="#141414" stroke-width="2.5"/>'+
+    '<polyline points="604,30 616,18 628,30 640,18 652,30 664,18 676,30" fill="none" stroke="#141414" stroke-width="3" stroke-linejoin="round"/>'+
+    '<path d="M748,176 q10,-16 20,0 t20,0 t20,0 t20,0" fill="none" stroke="#0E5AA7" stroke-width="4" stroke-linecap="round"/>'+
+    /* white grid tile with hard shadow */
+    '<rect x="586" y="92" width="120" height="86" fill="#141414"/><rect x="578" y="84" width="120" height="86" fill="#FFFFFF" stroke="#141414" stroke-width="2.5"/><rect x="578" y="84" width="120" height="86" fill="url(#me-grid)"/>'+
+    /* hand holding blue card */
+    '<g transform="rotate(-10 660 110)">'+
+      '<rect x="690" y="92" width="14" height="22" rx="7" fill="#FFFFFF" stroke="#141414" stroke-width="2.5"/>'+
+      '<rect x="690" y="110" width="16" height="22" rx="8" fill="#FFFFFF" stroke="#141414" stroke-width="2.5"/>'+
+      '<rect x="688" y="128" width="16" height="20" rx="8" fill="#FFFFFF" stroke="#141414" stroke-width="2.5"/>'+
+      '<rect x="600" y="62" width="104" height="66" rx="8" fill="#0E5AA7" stroke="#141414" stroke-width="3"/>'+
+      '<rect x="612" y="74" width="24" height="16" rx="3" fill="#FFD23F"/>'+
+      '<path d="M640,200 v-44 c0,-14 10,-22 24,-22 h22 c12,0 16,8 16,18 c0,14 -6,22 -18,26 l-4,22z" fill="#FFFFFF" stroke="#141414" stroke-width="2.5" stroke-linejoin="round"/>'+
+      '<rect x="640" y="108" width="50" height="18" rx="9" fill="#FFFFFF" stroke="#141414" stroke-width="2.5" transform="rotate(-28 646 126)"/>'+
+      '<rect x="672" y="100" width="12" height="11" rx="4" fill="none" stroke="#141414" stroke-width="1.8" transform="rotate(-28 646 126)"/>'+
+    '</g>';
+  return svg("Memphis Milano 曼菲斯示意：鋸齒邊藍色色塊、薄荷綠底與水磨石碎點、拱形與圓形雙色調人像框、三角形與鋸齒線與波浪線、硬陰影白色格紋磚、手拿藍色卡片",s,defs);
+}
+
+function swAlpine(){
+  var inks={n:"#082848",r:"#B5262E",g:"#2F6B5A",y:"#E0B04A"},m="";
+  for(var i=0;i<20;i++){
+    var cx=22+i*44,cy=17,t=i%5;
+    if(t===0){ /* Savoie edelweiss */
+      for(var p=0;p<6;p++){m+='<ellipse cx="'+cx+'" cy="'+(cy-6)+'" rx="2.6" ry="5.5" fill="'+inks.g+'" transform="rotate('+(p*60)+' '+cx+' '+cy+')"/>';}
+      m+='<circle cx="'+cx+'" cy="'+cy+'" r="3" fill="'+inks.y+'"/>';
+    }else if(t===1){ /* Breton ermine */
+      m+='<circle cx="'+(cx-4)+'" cy="'+(cy-8)+'" r="1.8" fill="'+inks.n+'"/><circle cx="'+cx+'" cy="'+(cy-10)+'" r="1.8" fill="'+inks.n+'"/><circle cx="'+(cx+4)+'" cy="'+(cy-8)+'" r="1.8" fill="'+inks.n+'"/>'+
+         '<path d="M'+cx+','+(cy-6)+' c5,4 5,10 0,16 c-5,-6 -5,-12 0,-16z" fill="'+inks.n+'"/>';
+    }else if(t===2){ /* Basque diamond */
+      m+='<rect x="'+(cx-7)+'" y="'+(cy-7)+'" width="14" height="14" fill="'+inks.r+'" transform="rotate(45 '+cx+' '+cy+')"/><rect x="'+(cx-3)+'" y="'+(cy-3)+'" width="6" height="6" fill="'+inks.y+'" transform="rotate(45 '+cx+' '+cy+')"/>';
+    }else if(t===3){ /* Alsace heart */
+      m+='<path d="M'+cx+','+(cy+9)+' l-9,-9 c-5,-6 2,-13 9,-6 c7,-7 14,0 9,6z" fill="'+inks.r+'"/>';
+    }else{ /* Provence flower */
+      for(var q=0;q<5;q++){var a=q*TAU/5;m+='<circle cx="'+(cx+6*Math.cos(a)).toFixed(1)+'" cy="'+(cy+6*Math.sin(a)).toFixed(1)+'" r="3.6" fill="'+inks.y+'"/>';}
+      m+='<circle cx="'+cx+'" cy="'+cy+'" r="2.6" fill="'+inks.n+'"/>';
+    }
+  }
+  function pine(x,y,h){var w=h*.42;return '<polygon points="'+x+','+(y-h)+' '+(x-w)+','+y+' '+x+','+y+'" fill="#2F6B5A"/><polygon points="'+x+','+(y-h)+' '+x+','+y+' '+(x+w)+','+y+'" fill="#24574A"/><rect x="'+(x-2)+'" y="'+y+'" width="4" height="6" fill="#082848"/>';}
+  function card(x,y,rot,col){return '<g transform="rotate('+rot+' '+x+' '+y+')"><rect x="'+(x-15)+'" y="'+y+'" width="30" height="40" rx="2" fill="#F4F1EA"/><rect x="'+(x-11)+'" y="'+(y+4)+'" width="22" height="22" fill="'+col+'"/><rect x="'+(x-3)+'" y="'+(y-6)+'" width="6" height="12" rx="1" fill="#E0B04A" stroke="#082848" stroke-width="1"/></g>';}
+  var defs='<linearGradient id="al-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#082848"/><stop offset="1" stop-color="#0F4A86"/></linearGradient>';
+  var s='<rect width="880" height="200" fill="url(#al-sky)"/>'+
+    '<circle cx="380" cy="70" r="1.6" fill="#F2F5F9"/><circle cx="520" cy="96" r="1.2" fill="#F2F5F9"/><circle cx="300" cy="150" r="1.4" fill="#F2F5F9"/><circle cx="860" cy="120" r="1.2" fill="#F2F5F9"/>'+
+    /* low-poly Alps */
+    '<polygon points="430,180 520,96 600,180" fill="#0F4A86"/><polygon points="520,96 560,140 600,180 540,150" fill="#082848" opacity=".7"/><polygon points="520,96 506,122 520,116 536,124" fill="#F2F5F9"/>'+
+    '<polygon points="520,180 650,52 790,180" fill="#0F4A86"/><polygon points="650,52 700,120 790,180 660,140" fill="#082848" opacity=".6"/>'+
+    '<polygon points="650,52 618,92 640,84 652,100 672,84 686,96" fill="#F2F5F9"/><polygon points="650,52 686,96 700,120 668,104" fill="#C9D6E6"/>'+
+    '<polygon points="700,180 800,76 880,150 880,180" fill="#0F4A86"/><polygon points="800,76 780,104 800,98 818,108" fill="#F2F5F9"/>'+
+    /* snow ground */
+    '<polygon points="380,200 420,172 560,166 700,176 880,164 880,200" fill="#F2F5F9"/><polygon points="560,166 640,200 420,200" fill="#DCE5EF"/>'+
+    /* chalet */
+    '<rect x="566" y="146" width="56" height="34" fill="#B5262E"/><polygon points="556,150 594,120 632,150" fill="#F2F5F9"/><polygon points="594,120 632,150 620,150" fill="#C9D6E6"/>'+
+    '<rect x="574" y="154" width="12" height="10" fill="#E0B04A"/><rect x="602" y="154" width="12" height="10" fill="#E0B04A"/><rect x="588" y="166" width="12" height="14" fill="#082848"/>'+
+    pine(510,182,40)+pine(540,186,28)+pine(660,184,34)+pine(700,186,24)+pine(840,180,44)+
+    /* folk ribbon: one cream base, same 4 inks */
+    '<rect width="880" height="34" fill="#F4F1EA"/><rect y="2" width="880" height="1.5" fill="#B5262E"/><rect y="30.5" width="880" height="1.5" fill="#B5262E"/>'+m+
+    /* pine garland with pegs + cards */
+    '<path d="M400,40 Q560,78 720,44 T880,52" fill="none" stroke="#2F6B5A" stroke-width="7" stroke-linecap="round"/>'+
+    '<path d="M400,40 Q560,78 720,44 T880,52" fill="none" stroke="#24574A" stroke-width="3" stroke-dasharray="2 5"/>'+
+    card(470,54,-6,"#B5262E")+card(560,62,3,"#2F6B5A")+card(812,48,6,"#0F4A86")+
+    '<text x="34" y="122" font-family="DM Serif Display" font-size="46" fill="#F4F1EA">Joyeux Noël</text>'+
+    '<text x="36" y="152" font-family="Ubuntu" font-weight="500" font-size="15" letter-spacing="1" fill="#E0B04A">Gift cards for everyone</text>';
+  return svg("Alpine Christmas 阿爾卑斯聖誕示意：頂部同底同色的法國民俗緞帶花紋、低多邊形雪山、木屋與多面松樹、松枝花圈用木夾夾著卡片",s,defs);
+}
+
+function swVeil(){
+  var rnd=seeded(11),bok="";
+  for(var i=0;i<18;i++){bok+='<circle cx="'+(rnd()*880).toFixed(0)+'" cy="'+(rnd()*200).toFixed(0)+'" r="'+(6+rnd()*22).toFixed(0)+'" fill="#FFF6E5" opacity="'+(.12+rnd()*.25).toFixed(2)+'"/>';}
+  var defs='<linearGradient id="ve-ph" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8C6A52"/><stop offset=".55" stop-color="#D9B48C"/><stop offset="1" stop-color="#F3E1C4"/></linearGradient>'+
+    '<linearGradient id="ve-veil" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2A1D3F"/><stop offset=".42" stop-color="#2A1D3F" stop-opacity=".95"/><stop offset=".68" stop-color="#553E7B" stop-opacity=".35"/><stop offset="1" stop-color="#553E7B" stop-opacity="0"/></linearGradient>'+
+    '<filter id="ve-soft"><feGaussianBlur stdDeviation="1.6"/></filter>';
+  function person(x,h,skin,top){return '<circle cx="'+x+'" cy="'+(200-h*.8).toFixed(1)+'" r="'+(h*.15).toFixed(1)+'" fill="'+skin+'"/><path d="M'+(x-h*.3)+',200 c0,-'+(h*.5)+' '+(h*.12)+',-'+(h*.66)+' '+(h*.3)+',-'+(h*.66)+' s'+(h*.3)+','+(h*.16)+' '+(h*.3)+','+(h*.66)+'z" fill="'+top+'"/>';}
+  function iso(y,top,side){return '<polygon points="470,'+(y)+' 540,'+(y-34)+' 620,'+(y-6)+' 550,'+(y+28)+'" fill="'+top+'"/><polygon points="470,'+y+' 550,'+(y+28)+' 550,'+(y+34)+' 470,'+(y+6)+'" fill="'+side+'"/><polygon points="550,'+(y+28)+' 620,'+(y-6)+' 620,'+y+' 550,'+(y+34)+'" fill="'+side+'" opacity=".8"/>';}
+  function chip(x,w,label){return '<rect x="'+x+'" y="104" width="'+w+'" height="26" rx="13" fill="#FFFFFF"/><circle cx="'+(x+14)+'" cy="117" r="8" fill="#F5A117"/><path d="M'+(x+10)+',117 l3,3 l6,-6" fill="none" stroke="#2A1D3F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><text x="'+(x+28)+'" y="121.5" font-family="Ubuntu" font-weight="500" font-size="12" fill="#2A1D3F">'+label+'</text>';}
+  var s='<rect width="880" height="200" fill="url(#ve-ph)"/>'+bok+
+    '<g filter="url(#ve-soft)"><rect x="560" y="70" width="320" height="8" fill="#6E5440" opacity=".5"/>'+
+    person(640,120,"#C58B66","#3E6E8E")+person(712,140,"#8A5A3C","#E6D2B5")+person(790,126,"#E8B896","#B5523B")+person(856,110,"#6B4430","#4F5D3A")+'</g>'+
+    '<rect width="880" height="200" fill="url(#ve-veil)"/>'+
+    iso(150,"#2A1D3F","#140D22")+iso(132,"#553E7B","#36275A")+iso(114,"#F5A117","#B8730C")+
+    '<text x="34" y="56" font-family="Ubuntu" font-weight="700" font-size="30" fill="#FFFFFF">Gift cards</text>'+
+    '<text x="34" y="90" font-family="Ubuntu" font-weight="700" font-size="30" fill="#FFFFFF">for everyone</text>'+
+    chip(34,128,"Instant delivery")+chip(170,112,"Any amount")+
+    '<rect x="34" y="138" width="120" height="30" rx="15" fill="#F5A117"/><text x="94" y="158" text-anchor="middle" font-family="Ubuntu" font-weight="700" font-size="13" fill="#2A1D3F">Discover</text>';
+  return svg("Photo + Brand Veil 滿版照片加品牌遮罩示意：滿版暖色照片、左實右透的紫色漸層遮罩、跨越交界的等角堆疊卡片、白色膠囊利益點與實心膠囊按鈕",s,defs);
+}
+
+/* ---------- data ---------- */
+var STYLES=[
+{id:"clay-christmas",cat:"ai",festive:true,en:"3D Clay Christmas",zh:"3D 黏土聖誕",tags:["節慶","3D","clay"],
+ use:"節慶主視覺 hero banner",
+ palette:["#2A1D3F","#4A3670","#F5A117","#E8423F","#3CC7E0","#F3EEF7"],
+ fonts:[{n:"DM Serif Display"},{n:"Ubuntu"}],
+ motifs:["玻璃雪花球","大小不一的黏土禮物盒","金色鈴鐺","黏土串燈","黏土聖誕樹"],
+ img:{src:"images/clay-christmas.jpg",w:1600,h:533,alt:"3D 黏土風聖誕插畫：紫色夜空下雪花球內有兩張空白卡片，旁邊是彩色禮物盒、聖誕樹與串燈"},
+ note:"AI 畫不出 logo：先生成空白卡片，之後再把 logo 合成上去。",
+ prompt:"Wide horizontal web banner illustration, 3D clay / plasticine style, soft matte clay material with subtle fingerprint texture, rounded puffy edges, soft studio lighting from top-left, gentle ambient occlusion, cute and premium, Christmas night scene. Composition: all subjects in the RIGHT 55% of the frame; the LEFT 45% is clean empty negative space with a smooth deep purple gradient (#2A1D3F to #4A3670) and a few soft out-of-focus snowflakes only. Right side, on a soft snowy clay hill: a large glass snow globe containing two blank gift cards with a purple-to-orange gradient (no text), on a dark purple clay base with an orange band; a cluster of 6–7 clay gift boxes of different sizes and colors (red with gold ribbon, cyan with white ribbon, orange with purple ribbon, small purple, a round orange hat-box) with big puffy bows; two stylized clay Christmas trees with tiny ornaments and gold stars; holly with red berries; hanging from the top edge: colorful clay fairy-light bulbs, two pairs of golden jingle bells tied with red ribbon, one orange bauble. Cohesive, high detail, crisp, octane render look, 3/4 view.",
+ neg:"any text, letters, numbers, logos, watermarks, people, hands, realistic photo, harsh shadows, cluttered left side, cropped globe, blurry details"},
+{id:"euro-animation",cat:"ai",en:"European 2D Animation",zh:"歐洲 2D 動畫角色",tags:["插畫","人物"],
+ use:"友善的團隊／B2B 情境",
+ palette:["#0E5AA7","#E8604A","#F6C445","#7FB49A","#1F3A68","#EDEBE6"],
+ fonts:[{n:"Caveat Brush"},{n:"Ubuntu"}],
+ motifs:["多元背景的同事群像","貝雷帽＋布列塔尼條紋衫","三角旗串","彩色紙花"],
+ img:{src:"images/euro-animation.jpg",w:1600,h:800,alt:"歐洲 2D 動畫風插畫：七位同事在右側歡呼，中間的女生高舉一張空白藍色卡片，上方有三角旗串"},
+ note:"實測結果偏 AI 感（每個人都張嘴大笑、Pixar 臉）；要更自然請改用 Ligne claire / Risograph / Gouache",
+ prompt:"Wide horizontal illustration, European 2D animation character design style: clean confident ink linework, flat colors with one soft cel-shadow layer, subtle paper and brush texture, elongated stylized proportions, expressive faces, natural dynamic poses. A group of 7 diverse office colleagues celebrating together, knees up, overlapping in two loose rows, in the RIGHT 55% of the frame; LEFT 45% empty plain background. Center: a curly-haired woman with round glasses raising a blank blue gift card above her head; a man in a Breton striped shirt and beret waving; a woman with a dark bob holding a small red gift; a bearded man pointing at the card; a woman with a bun clapping; a young man in an orange hoodie; an older woman with grey hair and a sage scarf. Light triangle bunting along the top. Background: plain warm light grey #EDEBE6 with paper grain.",
+ neg:"text, logos, watermarks, signatures, photorealism, 3D render, anime/manga, chibi, cropped heads, extra fingers, busy background"},
+{id:"ligne-claire",cat:"ai",en:"Ligne Claire",zh:"法比漫畫線條",tags:["插畫","人物","復古"],
+ use:"優雅、沉穩的編輯風情境",
+ palette:["#0E5AA7","#F2EADB","#E8806A","#D9A93B","#141E33"],
+ fonts:[{n:"Archivo Black"},{n:"Ubuntu"}],
+ motifs:["粗細一致的細黑外框線","完全平塗、無漸層","限 5 色","標題下方螢光筆底線","CTA 用漫畫式硬陰影"],
+ img:{src:"images/ligne-claire.jpg",w:1600,h:533,alt:"法比漫畫清線風插畫：六位穿著日常服裝的同事排成一列，一人拿著空白藍色卡片，一人遞出小禮物"},
+ prompt:"Wide 3:1 editorial illustration in the Franco-Belgian 'ligne claire' comic tradition: uniform thin black ink outlines of constant weight, completely flat colors with no gradients and no shading, simple dot eyes, small understated mouths, restrained and elegant, like a vintage European comic album or a 1960s French poster. A row of 6 colleagues spread across the RIGHT 60% of the frame, standing at slightly different depths, cropped at the waist. Varied subtle expressions: smiling, mid-conversation, surprised, one calmly holding a blank blue card (no text), one handing a small wrapped present to another. Natural relaxed poses. Mixed ages and backgrounds, everyday clothes (Breton striped top, beret, cardigans, trench coat). Limited palette of 5 flat colors: blue #0E5AA7, warm cream #F2EADB, soft coral #E8806A, mustard #D9A93B, dark navy ink. Plain cream background, LEFT 40% empty. All heads in the upper 70% of the image.",
+ neg:"3D, glossy, gradients, airbrush, Pixar or Disney faces, big open-mouth smiles, sparkles, confetti, text, logos, signatures, extra fingers"},
+{id:"risograph",cat:"ai",en:"Risograph",zh:"雙色孔版印刷",tags:["插畫","印刷感"],
+ use:"獨立刊物／編輯風／年輕調性",
+ palette:["#0E5AA7","#FF6B5A","#F0E7DD","#2B3A55"],
+ fonts:[{n:"Bricolage Grotesque"},{n:"Ubuntu"}],
+ motifs:["只用兩種油墨","明顯顆粒感","網點質感","輕微套色偏移（標題用另一色 text-shadow 錯位）","兩色疊印出紫色"],
+ img:{src:"images/risograph.jpg",w:1600,h:533,alt:"雙色孔版印刷風插畫：藍色與珊瑚紅兩色油墨，五位同事喝咖啡、拿卡片、拆信封與揮手"},
+ prompt:"Wide 3:1 risograph-printed editorial illustration, two-ink riso print (blue #0E5AA7 and fluorescent coral #FF6B5A) on off-white recycled paper, visible grain, halftone texture, slight ink misregistration between the two colors, overprint where colors overlap creates a dark purple, hand-drawn pencil-like line quality, imperfect and charming. A small group of 5 colleagues in the RIGHT 60% of the frame, different scales, slightly overlapping like a magazine spread: one holding up a blank card, two chatting over coffee, one opening an envelope with a card inside, one waving. Calm natural expressions, simplified faces, elongated bodies, stylized European editorial look. LEFT 40% empty paper. Heads in the upper 70% of the image.",
+ neg:"full color, gradients, 3D, shiny, cute cartoon faces, wide grins, confetti, text, logos, signatures"},
+{id:"gouache",cat:"ai",en:"Gouache Picture Book",zh:"不透明水彩繪本",tags:["插畫","溫暖"],
+ use:"溫暖、有人味、舒適的故事情境",
+ palette:["#F0E7D7","#5A3A28","#C8643F","#0E5AA7","#7A8C5A","#D9A93B"],
+ fonts:[{n:"Fraunces",css:"'Fraunces';font-style:italic;font-weight:600",note:"斜體當強調字"},{n:"Ubuntu"}],
+ motifs:["看得見的筆刷痕","粉質霧面質感","大地色系","圓潤有機的 CTA"],
+ img:{src:"images/gouache.jpg",w:1600,h:533,alt:"不透明水彩繪本風插畫：五位同事圍著木桌，其中一人把藍色卡片遞給另一人，桌上有馬克杯與植物"},
+ prompt:"Wide 3:1 gouache painting in the style of a contemporary European children's picture book: visible opaque brush strokes, chalky matte texture, slightly naive and imperfect shapes, muted earthy palette (dusty blue, terracotta, ochre, sage, cream) with blue #0E5AA7 as the accent. 5 colleagues gathered loosely around a table in the RIGHT 60% of the frame, one passing a blank blue gift card to another, others leaning in with quiet, warm, varied expressions. Simple shapes, small facial features, no or very soft outlines. Plain textured cream paper on the LEFT 40%. Heads in the upper 70% of the image.",
+ neg:"digital airbrush, glossy skin, big eyes, anime, Pixar faces, open-mouth laughing, confetti, text, logos, signatures"},
+
+{id:"pop-art",cat:"layout",en:"Pop Art Comic (Lichtenstein)",zh:"普普漫畫",tags:["版面","漫畫","復古"],
+ use:"活潑、高能量的促銷或限時活動 banner",
+ palette:["#F5A117","#2A1D3F","#E8501A","#FFE14D","#FFFFFF","#553E7B"],
+ fonts:[{n:"Archivo Black",note:"白字＋深色描邊＋硬陰影"},{n:"Bangers",note:"漫畫對白／小標"}],
+ motifs:["放射狀 sunburst","班戴點（Ben-Day halftone）","對話框","指向漫畫格內的強調楔形","WOW 爆炸框","閃電","閃亮星星、愛心","粗框漫畫格＋硬位移陰影"],
+ swatch:swPop,
+ prompt:"Pop art comic panel in the style of 1960s American comics, Ben-Day halftone dots, thick black outlines, flat orange and purple palette, a person laughing while holding a blank gift card, speech bubble left empty, sunburst background, WOW explosion burst",
+ neg:"text in bubbles, logos, 3D, photorealism"},
+{id:"swiss-style",cat:"layout",en:"Swiss Style",zh:"瑞士國際主義",tags:["版面","網格","極簡"],
+ use:"理性、俐落、有高級感的品牌主視覺",
+ palette:["#F6F5F7","#2A1D3F","#553E7B","#F5A117","#B8650A"],
+ fonts:[{n:"Archivo",css:"'Archivo';font-weight:800;letter-spacing:-.04em",note:"800 字重、緊字距"}],
+ motifs:["嚴格網格","細線與粗線分隔","實心圓上的超大數字「1」","直排標籤","黑白攝影搭配幾何色塊（四分之一圓、條紋、點陣）"],
+ swatch:swSwiss,
+ note:"右欄不要放文字清單，太像文章；換成圖片＋幾何色塊",
+ prompt:"Black and white documentary photograph of a family exchanging a small gift at home, high contrast, natural light, candid, grain",
+ neg:"color, text, logos"},
+{id:"esports",cat:"layout",en:"Esports Character Select",zh:"電競選角畫面",tags:["版面","遊戲","深色"],
+ use:"遊戲、年輕族群、抽獎或挑選類活動",
+ palette:["#0D0915","#2A1D3F","#F5A117","#553E7B","#FFFFFF"],
+ fonts:[{n:"Chakra Petch",css:"'Chakra Petch';font-style:italic;font-weight:700;text-transform:uppercase",note:"斜體、全大寫"}],
+ motifs:["斜切分割線","斜角選項格（其中一格選中發光）","四角框線","橘色光暈主卡","後方堆疊霧面深灰卡片（無流光）"],
+ swatch:swEsports,
+ note:"後方卡片用黑／深灰霧面質感，不要流光",
+ prompt:"Dark esports game UI character-select background, diagonal stripes, purple and orange neon accents, a floating glowing blank card as the selected item, matte dark cards behind",
+ neg:"text, logos, characters"},
+{id:"memphis",cat:"layout",en:"Memphis Milano × Figma Flat",zh:"曼菲斯",tags:["版面","幾何","80s"],
+ use:"年輕、有設計感、創意產業的活動頁",
+ palette:["#0E5AA7","#BFE8D4","#FFD23F","#FF6B4A","#141414"],
+ fonts:[{n:"Bricolage Grotesque",note:"800 字重"}],
+ motifs:["鋸齒邊實心藍色色塊","薄荷綠底","水磨石碎點","拱形與圓形照片框＋位移色塊陰影（雙色調人像）","三角形、鋸齒線、波浪線","硬陰影白色格紋磚","手拿著卡片"],
+ swatch:swMemphis,
+ note:"右側不要灰白；人像用雙色調；拇指要畫清楚",
+ prompt:"Memphis Milano 1980s design collage, mint background, terrazzo confetti, arches and circles, zig-zags and squiggles, flat bold colors blue yellow coral, a cartoon hand holding a blank blue card",
+ neg:"text, logos, gradients, 3D"},
+{id:"alpine-christmas",cat:"layout",festive:true,en:"Alpine Christmas + French Folk Ribbon",zh:"阿爾卑斯聖誕＋法國民俗緞帶",tags:["節慶","版面","民俗"],
+ use:"冬季／聖誕節慶 banner，偏歐洲在地感",
+ palette:["#082848","#0F4A86","#F2F5F9","#2F6B5A","#B5262E","#E0B04A","#F4F1EA"],
+ fonts:[{n:"DM Serif Display"},{n:"Ubuntu"}],
+ motifs:["頂部緞帶：5 種法國地方花紋放在同一個米白底、同 4 色油墨（薩瓦雪絨花、布列塔尼白鼬紋、巴斯克菱形、阿爾薩斯愛心、普羅旺斯小花）","低多邊形幾何阿爾卑斯山","木造小屋","多面切割松樹","松枝花圈用木夾夾著卡片","設計過的賀卡"],
+ swatch:swAlpine,
+ note:"花紋不要各段不同底色拼接，要同底同色才融合",
+ prompt:"Low-poly geometric vector illustration of the snowy French Alps at night, faceted mountains in navy and white, small wooden chalet with warm lit windows, faceted pine trees, a pine garland with wooden clothes pegs holding blank cards, folk-art ribbon border",
+ neg:"text, logos, photorealism"},
+{id:"photo-veil",cat:"layout",en:"Photo + Brand Veil + 3D Cards",zh:"滿版照片＋品牌遮罩",tags:["版面","照片"],
+ use:"需要真實照片的企業／B2B 主視覺",
+ palette:["#2A1D3F","#553E7B","#F5A117","#FFFFFF"],
+ fonts:[{n:"Ubuntu",css:"'Ubuntu';font-weight:700",note:"700 字重"}],
+ motifs:["滿版照片","水平品牌色漸層遮罩：左側實色（墊文字）→ 右側透明","跨越交界的等角堆疊卡片","白色膠囊利益點＋圓形 icon","實心膠囊 CTA"],
+ swatch:swVeil,
+ note:"淺底＋圓角照片框像網頁區塊、不像 banner",
+ prompt:"Bright candid photo of a diverse team smiling in a modern office, shallow depth of field, warm light, subject on the right third, empty space on the left",
+ neg:"text, logos, watermarks"}
+];
+
+/* ---------- render ---------- */
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+var CAT={ai:"AI 生圖插畫",layout:"版面風格"};
+function fontItem(f){
+  var css=f.css||("'"+f.n+"'");
+  var url="https://fonts.google.com/specimen/"+f.n.replace(/ /g,"+");
+  return '<li><span class="aa" style="font-family:'+esc(css)+'" aria-hidden="true">Aa</span><a href="'+url+'" target="_blank" rel="noopener">'+esc(f.n)+'</a>'+(f.note?'<span class="fnote">'+esc(f.note)+'</span>':'')+'</li>';
+}
+function card(s){
+  var visual=s.img
+    ?'<img src="'+s.img.src+'" width="'+s.img.w+'" height="'+s.img.h+'" alt="'+esc(s.img.alt)+'" loading="lazy" decoding="async">'
+    :s.swatch();
+  var badges='<span class="badge cat">'+CAT[s.cat]+'</span>'+s.tags.map(function(t){return '<span class="badge">'+esc(t)+'</span>';}).join("");
+  var pal=s.palette.map(function(h){return '<button type="button" class="hex" data-copy="'+h+'" aria-label="複製色碼 '+h+'"><span class="sw" style="background:'+h+'"></span><span class="lbl">'+h+'</span></button>';}).join("");
+  return '<article class="card" id="'+s.id+'" aria-labelledby="'+s.id+'-h">'+
+    '<div class="visual">'+visual+'</div>'+
+    '<div class="card-body"><div class="meta">'+
+      '<div><h2 id="'+s.id+'-h">'+esc(s.en)+'<span class="zh">'+esc(s.zh)+'</span></h2><div class="badges">'+badges+'</div></div>'+
+      '<div><h3>適合用在</h3><p class="use">'+esc(s.use)+'</p></div>'+
+      '<div><h3>色票（點擊複製）</h3><div class="palette">'+pal+'</div></div>'+
+      '<div><h3>字體搭配</h3><ul class="fonts">'+s.fonts.map(fontItem).join("")+'</ul></div>'+
+      '<div><h3>關鍵元素</h3><ul class="motifs">'+s.motifs.map(function(m){return '<li>'+esc(m)+'</li>';}).join("")+'</ul></div>'+
+      (s.note?'<p class="note"><strong>注意</strong>'+esc(s.note)+'</p>':'')+
+    '</div><div class="prompts">'+
+      '<div><div class="prompt-head"><h3 id="'+s.id+'-p">Prompt</h3><button type="button" class="copy" data-target="'+s.id+'-pre" data-label="複製 Prompt">複製 Prompt</button></div>'+
+      '<pre id="'+s.id+'-pre" aria-labelledby="'+s.id+'-p">'+esc(s.prompt)+'</pre></div>'+
+      '<div><div class="prompt-head"><h3 id="'+s.id+'-n">Negative prompt</h3><button type="button" class="copy ghost" data-target="'+s.id+'-neg" data-label="複製 Negative">複製 Negative</button></div>'+
+      '<pre class="neg" id="'+s.id+'-neg" aria-labelledby="'+s.id+'-n">'+esc(s.neg)+'</pre></div>'+
+    '</div></div></article>';
+}
+var list=document.getElementById("list");
+list.innerHTML=STYLES.map(card).join("")+'<p class="empty" id="empty" hidden>找不到符合的風格，試試其他關鍵字。</p>';
+
+/* ---------- filter + search ---------- */
+var current="all",q=document.getElementById("q"),countEl=document.getElementById("count");
+function haystack(s){return [s.en,s.zh,s.tags.join(" "),s.use,s.fonts.map(function(f){return f.n;}).join(" "),CAT[s.cat]].join(" ").toLowerCase();}
+function apply(){
+  var term=q.value.trim().toLowerCase(),shown=0;
+  STYLES.forEach(function(s){
+    var okCat=current==="all"||(current==="festive"?!!s.festive:s.cat===current);
+    var okQ=!term||term.split(/\s+/).every(function(w){return haystack(s).indexOf(w)>-1;});
+    var el=document.getElementById(s.id),vis=okCat&&okQ;
+    el.hidden=!vis; if(vis)shown++;
+  });
+  document.getElementById("empty").hidden=shown>0;
+  countEl.textContent="顯示 "+shown+" / "+STYLES.length+" 種風格";
+}
+document.getElementById("filters").addEventListener("click",function(e){
+  var b=e.target.closest("[data-filter]"); if(!b)return;
+  current=b.getAttribute("data-filter");
+  this.querySelectorAll("[data-filter]").forEach(function(x){x.setAttribute("aria-pressed",x===b?"true":"false");});
+  apply();
+});
+q.addEventListener("input",apply);
+apply();
+
+/* ---------- copy ---------- */
+var live=document.getElementById("live");
+function copyText(t){
+  if(navigator.clipboard&&window.isSecureContext){return navigator.clipboard.writeText(t).catch(function(){return legacyCopy(t);});}
+  return legacyCopy(t);
+}
+function legacyCopy(t){
+  return new Promise(function(res,rej){
+    var ta=document.createElement("textarea");ta.value=t;ta.setAttribute("readonly","");ta.style.position="fixed";ta.style.opacity="0";
+    document.body.appendChild(ta);ta.select();
+    try{document.execCommand("copy")?res():rej();}catch(err){rej(err);}
+    document.body.removeChild(ta);
+  });
+}
+function flash(btn,labelEl,orig){
+  btn.classList.add("done");labelEl.textContent="已複製";live.textContent="已複製";
+  clearTimeout(btn._t);
+  btn._t=setTimeout(function(){btn.classList.remove("done");labelEl.textContent=orig;live.textContent="";},1500);
+}
+list.addEventListener("click",function(e){
+  var b=e.target.closest(".copy,.hex"); if(!b)return;
+  var text,labelEl,orig;
+  if(b.classList.contains("hex")){text=b.getAttribute("data-copy");labelEl=b.querySelector(".lbl");orig=text;}
+  else{text=document.getElementById(b.getAttribute("data-target")).textContent;labelEl=b;orig=b.getAttribute("data-label");}
+  copyText(text).then(function(){flash(b,labelEl,orig);},function(){live.textContent="複製失敗，請手動選取";});
+});
+})();
+</script>
+</body>
+</html>
