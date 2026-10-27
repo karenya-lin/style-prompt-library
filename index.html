@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>風格提示詞庫 Style Prompt Library</title>
-<meta name="description" content="UI/UX 設計師的視覺風格與 AI 生圖提示詞庫：11 種風格，含色票、字體搭配、關鍵元素、可直接複製的英文 prompt 與 negative prompt。">
+<meta name="description" content="UI/UX 設計師的視覺風格與 AI 生圖提示詞庫：13 種風格，含色票、字體搭配、關鍵元素、可直接複製的英文 prompt 與 negative prompt。">
 <meta name="color-scheme" content="light dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@800&family=Bangers&family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Caveat+Brush&family=Chakra+Petch:ital,wght@1,700&family=DM+Serif+Display&family=Fraunces:ital,wght@1,600&family=Ubuntu:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@800&family=Bangers&family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Caveat+Brush&family=Chakra+Petch:ital,wght@1,700&family=DM+Serif+Display&family=Fraunces:ital,wght@1,600&family=Ubuntu:wght@400;500;700&family=Inter+Tight:wght@500;700&family=IBM+Plex+Mono&display=swap">
 <style>
 :root{
   --bg:#FAF8F5; --surface:#FFFFFF; --surface-2:#F4F1F8; --text:#1B1726; --muted:#565063;
@@ -116,6 +116,7 @@ footer.site{padding:32px 0 48px;color:var(--muted);font-size:.875rem}
       <button type="button" class="chip" data-filter="all" aria-pressed="true">全部</button>
       <button type="button" class="chip" data-filter="ai" aria-pressed="false">AI 生圖插畫</button>
       <button type="button" class="chip" data-filter="layout" aria-pressed="false">版面風格</button>
+      <button type="button" class="chip" data-filter="mockup" aria-pressed="false">裝置展示</button>
       <button type="button" class="chip" data-filter="festive" aria-pressed="false">節慶</button>
     </fieldset>
     <div class="search">
@@ -138,13 +139,14 @@ footer.site{padding:32px 0 48px;color:var(--muted);font-size:.875rem}
       <li>生圖不要讓 AI 畫 logo：生空白卡，再合成 logo</li>
       <li>AI 人物常見破綻：每個人都張嘴大笑、Pixar 臉、紙花過多 → 指定真實媒材＋限色＋表情多樣</li>
       <li>花紋拼接要同底同色才會融合</li>
+      <li>裝置展示的背景與光色要取自產品自己的色票：淺色 UI 配明亮攝影棚，不要硬套暗色霓虹</li>
       <li>文案要給左側 40–45% 的空白，所有人頭放在上方 70%，裁成 4.4:1 時才不會切到臉</li>
     </ol>
   </section>
 </main>
 
 <footer class="site">
-  <div class="wrap">最後更新：<time datetime="2026-10-22">2026-10-22</time>　·　範例圖皆為 AI 生成，卡面留白、不含任何商標。</div>
+  <div class="wrap">最後更新：<time datetime="2026-10-27">2026-10-27</time>　·　範例圖皆為 AI 生成，卡面留白、不含任何商標。</div>
 </footer>
 <div class="sr" id="live" aria-live="polite"></div>
 
@@ -371,6 +373,56 @@ function swVeil(){
     '<rect x="34" y="138" width="120" height="30" rx="15" fill="#F5A117"/><text x="94" y="158" text-anchor="middle" font-family="Ubuntu" font-weight="700" font-size="13" fill="#2A1D3F">Discover</text>';
   return svg("Photo + Brand Veil 滿版照片加品牌遮罩示意：滿版暖色照片、左實右透的紫色漸層遮罩、跨越交界的等角堆疊卡片、白色膠囊利益點與實心膠囊按鈕",s,defs);
 }
+function swPlinth(){
+  var defs='<linearGradient id="pl-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7F6F8"/><stop offset="1" stop-color="#E4E1E7"/></linearGradient>'+
+    '<linearGradient id="pl-scr" x1="0" y1="0" x2="0" y2="1"><stop offset=".55" stop-color="#FFFFFF"/><stop offset=".8" stop-color="#F6C1B4"/><stop offset="1" stop-color="#C9CCF2"/></linearGradient>'+
+    '<pattern id="pl-hex" width="10" height="17.3" patternUnits="userSpaceOnUse"><circle cx="5" cy="4.3" r="2.6" fill="#BDB8C2"/><circle cx="0" cy="13" r="2.6" fill="#BDB8C2"/><circle cx="10" cy="13" r="2.6" fill="#BDB8C2"/></pattern>'+
+    '<filter id="pl-glow" x="-20%" y="-200%" width="140%" height="500%"><feGaussianBlur stdDeviation="4"/></filter>'+
+    '<filter id="pl-shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="10" dy="12" stdDeviation="10" flood-color="#6E6676" flood-opacity=".35"/></filter>';
+  function block(x,y,w,d,h){return '<polygon points="'+x+','+y+' '+(x+w)+','+(y-d*.5)+' '+(x+w+d)+','+y+' '+(x+d)+','+(y+d*.5)+'" fill="#FFFFFF"/>'+
+    '<polygon points="'+x+','+y+' '+(x+d)+','+(y+d*.5)+' '+(x+d)+','+(y+d*.5+h)+' '+x+','+(y+h)+'" fill="#E9E6EC"/>'+
+    '<polygon points="'+(x+d)+','+(y+d*.5)+' '+(x+w+d)+','+y+' '+(x+w+d)+','+(y+h)+' '+(x+d)+','+(y+d*.5+h)+'" fill="#D9D5DC"/>';}
+  var s='<rect width="880" height="200" fill="url(#pl-bg)"/>'+
+    '<rect x="640" y="0" width="240" height="90" fill="url(#pl-hex)" opacity=".55"/>'+
+    '<rect x="0" y="150" width="200" height="50" fill="url(#pl-hex)" opacity=".4"/>'+
+    block(120,120,300,120,60)+block(470,60,280,110,90)+
+    '<rect x="96" y="176" width="190" height="5" rx="2.5" fill="#FF2D55" filter="url(#pl-glow)"/><rect x="96" y="177" width="190" height="3" rx="1.5" fill="#FF4D6D"/>'+
+    '<rect x="760" y="120" width="120" height="5" rx="2.5" fill="#FF2D55" filter="url(#pl-glow)"/><rect x="760" y="121" width="120" height="3" rx="1.5" fill="#FF4D6D"/>'+
+    '<polygon points="560,0 880,0 880,40 640,200 470,200" fill="#FFFFFF" opacity=".35"/>'+
+    '<g transform="translate(470 100) rotate(32) skewX(-14) scale(.92 .66)" filter="url(#pl-shadow)">'+
+      '<rect x="-60" y="-118" width="120" height="236" rx="24" fill="#FFFFFF" fill-opacity=".55" stroke="#FFFFFF" stroke-width="3"/>'+
+      '<rect x="-54" y="-112" width="108" height="224" rx="19" fill="url(#pl-scr)"/>'+
+      '<rect x="-17" y="-106" width="34" height="9" rx="4.5" fill="#0E0E10"/>'+
+      '<rect x="-46" y="-84" width="58" height="12" rx="3" fill="#0E0E10"/>'+
+      '<rect x="-46" y="-62" width="92" height="40" rx="12" fill="#FFFFFF" stroke="#ECEAF0"/>'+
+      '<rect x="-46" y="-14" width="92" height="40" rx="12" fill="#F4F2F6"/>'+
+      '<rect x="-24" y="56" width="48" height="16" rx="8" fill="#0E0E10"/>'+
+    '</g>';
+  return svg("Frosted Glass Phone on Plinths 白色幾何台座上的霧面玻璃手機示意：淺灰攝影棚、白色等角台座、紅色霓虹燈條、蜂巢沖孔金屬、斜放的透明殼手機，畫面是白色霧面卡片與桃粉到薰衣草漸層",s,defs);
+}
+function swCubes(){
+  var defs='<radialGradient id="cu-bg" cx=".55" cy=".35" r=".8"><stop offset="0" stop-color="#2A1640"/><stop offset=".55" stop-color="#110B1E"/><stop offset="1" stop-color="#07060C"/></radialGradient>'+
+    '<radialGradient id="cu-orb" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#FFE3F4"/><stop offset=".35" stop-color="#E05BFF"/><stop offset=".7" stop-color="#FF3B1F"/><stop offset="1" stop-color="#3B3FD8"/></radialGradient>'+
+    '<linearGradient id="cu-cta" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF4A2E"/><stop offset="1" stop-color="#D91F12"/></linearGradient>'+
+    '<filter id="cu-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="9"/></filter>';
+  function cube(x,y,r,warm){var e=warm?"#FF3B1F":"#5B5FFF";
+    return '<polygon points="'+x+','+(y-r*.5)+' '+(x+r)+','+y+' '+x+','+(y+r*.5)+' '+(x-r)+','+y+'" fill="#1C1630"/>'+
+      '<polygon points="'+(x-r)+','+y+' '+x+','+(y+r*.5)+' '+x+','+(y+r*1.3)+' '+(x-r)+','+(y+r*.8)+'" fill="#120E20"/>'+
+      '<polygon points="'+x+','+(y+r*.5)+' '+(x+r)+','+y+' '+(x+r)+','+(y+r*.8)+' '+x+','+(y+r*1.3)+'" fill="#0B0814"/>'+
+      '<polyline points="'+(x-r)+','+y+' '+x+','+(y-r*.5)+' '+(x+r)+','+y+'" fill="none" stroke="'+e+'" stroke-width="1.6" opacity=".9"/>';}
+  var s='<rect width="880" height="200" fill="url(#cu-bg)"/>';
+  for(var row=0;row<4;row++){for(var col=0;col<8;col++){var x=360+col*80+(row%2)*40,y=-10+row*48;if(Math.abs(x-620)<50&&Math.abs(y-86)<30)continue;s+=cube(x,y,38,x>620);}}
+  s+='<circle cx="620" cy="96" r="44" fill="#E05BFF" opacity=".55" filter="url(#cu-glow)"/>'+
+    '<polygon points="620,58 660,78 660,124 620,144 580,124 580,78" fill="#FFFFFF" fill-opacity=".08" stroke="#FFB3C8" stroke-opacity=".7"/>'+
+    '<circle cx="620" cy="100" r="22" fill="url(#cu-orb)"/>'+
+    '<rect x="0" y="0" width="360" height="200" fill="#07060C" opacity=".55"/>'+
+    '<text x="34" y="96" font-family="Inter Tight" font-weight="500" font-size="40" fill="#FFFFFF">Built for</text>'+
+    '<text x="34" y="138" font-family="Inter Tight" font-weight="500" font-size="40" fill="#FFFFFF">Builders</text>'+
+    '<text x="36" y="160" font-family="IBM Plex Mono" font-size="10" fill="#C9C4D6">Fast transactions, strong security.</text>'+
+    '<rect x="34" y="170" width="98" height="24" rx="6" fill="url(#cu-cta)"/><text x="83" y="186" text-anchor="middle" font-family="Inter Tight" font-weight="700" font-size="10" fill="#FFFFFF">Start Building</text>'+
+    '<rect x="140" y="170" width="78" height="24" rx="6" fill="#1E1A28"/><text x="179" y="186" text-anchor="middle" font-family="Inter Tight" font-weight="700" font-size="10" fill="#FFFFFF">Read docs</text>';
+  return svg("Dark Neon Cube Field 深色霓虹方塊陣列示意：深紫黑底上俯視的深色金屬方塊，左側藍紫、右側紅橘邊緣光，中央透明六角玻璃包著粉紫橘虹彩光球，左側白色大標題、等寬字內文、紅色漸層與深色按鈕",s,defs);
+}
 
 /* ---------- data ---------- */
 var STYLES=[
@@ -469,12 +521,30 @@ var STYLES=[
  swatch:swVeil,
  note:"淺底＋圓角照片框像網頁區塊、不像 banner",
  prompt:"Bright candid photo of a diverse team smiling in a modern office, shallow depth of field, warm light, subject on the right third, empty space on the left",
- neg:"text, logos, watermarks"}
+ neg:"text, logos, watermarks"},
+{id:"frosted-plinth",cat:"mockup",en:"Frosted Glass Phone on Architectural Plinths",zh:"白色幾何台座上的霧面玻璃手機",tags:["3D","攝影棚","淺色","Dribbble"],
+ use:"Dribbble／作品集的 App 主視覺、產品發表 hero、展示影片的開場或收尾鏡頭",
+ palette:["#F5F4F6","#D9D5DC","#FF2D55","#F6C1B4","#C9CCF2","#0E0E10"],
+ fonts:[{n:"Inter Tight",css:"'Inter Tight';font-weight:700",note:"畫面大標題，粗體、字距收緊"},{n:"Inter"}],
+ motifs:["透明手機殼，手機斜放 30–40° 的俯角","白色階梯幾何台座，日光打出硬邊投影","嵌在台座裡的紅／粉霓虹燈條，只做點綴","蜂巢沖孔金屬當背景材質","畫面：白色霧面卡片堆疊，底部桃粉到薰衣草漸層","超大粗體無襯線標題、黑色膠囊控制列、圓形 icon 按鈕"],
+ swatch:swPlinth,
+ note:"參考 Milkinside（milkinside.com）作品的質感，原圖不放進公開 repo，這裡只記特徵與提示詞。AI 生圖畫不好 UI 文字：先生成空白發光螢幕，再把真實畫面合成上去。",
+ prompt:"Photorealistic 3D product render, a modern smartphone in a clear transparent case lying tilted at about 35 degrees on a stack of matte white architectural plinths and stepped geometric blocks, bright natural daylight from the upper right casting crisp hard-edged shadows, thin glowing red-pink neon light strips embedded in the blocks, perforated honeycomb metal panels in the background, soft bloom, shallow depth of field, premium minimal tech aesthetic, the phone screen is a blank glowing white panel ready for UI compositing, 4:3",
+ neg:"text, letters, logos, watermarks, garbled UI, hands, fingers, people, dark moody lighting, cluttered background, distorted phone proportions, extra camera lenses, cartoon style, low resolution"},
+{id:"neon-cube-field",cat:"layout",en:"Dark Neon Cube Field Hero",zh:"深色霓虹方塊陣列主視覺",tags:["版面","3D","深色","Web3"],
+ use:"科技／Web3／開發者平台首頁的 hero",
+ palette:["#07060C","#1A1430","#3B3FD8","#E05BFF","#FF3B1F","#FFFFFF"],
+ fonts:[{n:"Inter Tight",css:"'Inter Tight';font-weight:500",note:"超大白色標題"},{n:"IBM Plex Mono",note:"內文用等寬字"}],
+ motifs:["俯視等角的深色金屬方塊陣列","電路板走線地面","中央透明玻璃方塊包著粉紫橘虹彩光球","左冷（藍紫）右暖（紅橘）雙色邊緣光，霓虹只沿著稜線","漂浮的深色膠囊導覽列＋白色 Connect 按鈕","紅色漸層主 CTA＋深色次 CTA"],
+ swatch:swCubes,
+ note:"3D 主體放中上，左下保留暗部給標題，文字對比才夠。參考 Karenya 2026-10-27 提供的截圖，原圖不放進公開 repo。",
+ prompt:"Dark cinematic 3D render, top-down isometric view of a grid of dark matte metallic cubes on a black circuit-board floor with fine glowing traces, a single transparent glass cube in the center containing a glossy iridescent sphere glowing pink, violet and orange, strong red-orange rim light from the right and cool violet-blue edge light from the left, thin neon light only along the cube edges, light volumetric haze, high contrast, deep shadows, empty dark area at the lower left for headline text, premium Web3 tech hero image, 16:9",
+ neg:"text, letters, logos, watermarks, people, cartoon, flat illustration, low contrast, washed-out colors, generic grid floor, lens flare overload, cluttered foreground"}
 ];
 
 /* ---------- render ---------- */
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
-var CAT={ai:"AI 生圖插畫",layout:"版面風格"};
+var CAT={ai:"AI 生圖插畫",layout:"版面風格",mockup:"裝置展示"};
 function fontItem(f){
   var css=f.css||("'"+f.n+"'");
   var url="https://fonts.google.com/specimen/"+f.n.replace(/ /g,"+");
